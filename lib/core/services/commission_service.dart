@@ -138,21 +138,21 @@ class CommissionService {
         }
         commission = 0;
         description = state.totalWithdrawn <= CommissionRules.privateFreeLimitEur
-            ? 'Withdraw ${_formatAmount(transaction)} (within free limit)'
-            : 'Withdraw ${_formatAmount(transaction)} (still within limit)';
+            ? 'Withdraw ${_formatAmount(transaction)} Free'
+            : 'Withdraw ${_formatAmount(transaction)} Limitli';
       } else {
         final chargeableAmount =
             (amountEur - state.deferredChargeable).clamp(0.0, amountEur);
         commission =
             chargeableAmount * CommissionRules.privateWithdrawRate;
         description = commission < 0.001
-            ? 'Withdraw ${_formatAmount(transaction)} (within free limit)'
-            : 'Withdraw ${_formatAmount(transaction)} (exceeded limit, charge on excess)';
+            ? 'Withdraw ${_formatAmount(transaction)} Free'
+            : 'Withdraw ${_formatAmount(transaction)}Limitli';
       }
     } else {
       commission = amountEur * CommissionRules.privateWithdrawRate;
       description =
-          'Withdraw ${_formatAmount(transaction)} (${state.withdrawalCount}th withdrawal, no free limit)';
+          'Withdraw ${_formatAmount(transaction)} (${state.withdrawalCount} no free';
     }
 
     final roundedCommission = _currencyService.roundUp(commission, 'EUR');
